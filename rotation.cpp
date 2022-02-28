@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include<math.h>
 #define pi 3.1415926535
 #define d2r(d) d*pi/180
@@ -48,16 +49,35 @@ void QuaternionTozyxEuler(double &qw , double &qx, double &qy, double &qz, doubl
     phi = atan2(2 * (qx * qw + qz * qy),(qw * qw - qx * qx - qy * qy + qz * qz));
 }
 
-int main ()
+int main (int argc, char** argv)
 {
+		
+	if (argc < 3){
+		std::cout << "too few argv" << std::endl;
+	}
+	
+	std::cout << "\n \ninput ZYX Euler "  <<std::endl;
+	std::cout << "Euler x:" << argv[1] <<std::endl;
+	std::cout << "Euler y:" << argv[2] <<std::endl;
+	std::cout << "Euler z:" << argv[3] <<std::endl;
+	
+	// double x = d2r(-179.904572);
+	// double y = d2r(-0.780936);
+	// double z = d2r(-164.295822);
+	
+	double x = d2r(strtod(argv[1],NULL));
+	double y = d2r(strtod(argv[2],NULL));
+	double z = d2r(strtod(argv[3],NULL));
 	
 	double qw,qx,qy,qz;
 	//axis angle 
 	double x1,y1,z1;
 	
-	double x = d2r(-179.904572);
-	double y = d2r(-0.780936);
-	double z = d2r(-164.295822);
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
+	std::cout << "from ZYX_Euler to quaternion"<<std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
 	
 	zyxEulerToQuaternion(x,y,z,qw,qx,qy,qz);
 	
@@ -66,11 +86,24 @@ int main ()
 	std::cout << "qy: "<< qy <<std::endl;
 	std::cout << "qz: "<< qz <<std::endl;
 	
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
+	std::cout << "from quaternion to axis_angle"<<std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
+	
 	QuaternionToAxisAngle(qw,qx,qy,qz,x1,y1,z1);
 	
 	std::cout << "ax: "<< x1 <<std::endl;
 	std::cout << "ay: "<< y1 <<std::endl;
 	std::cout << "az: "<< z1 <<std::endl;
+	
+	
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
+	std::cout << "from axis_angle to quaternion"<<std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
 	
 	double qw_1,qx_1,qy_1,qz_1;
 	AxisAngleToQuaternion(x1,y1,z1,qw_1,qx_1,qy_1,qz_1);
@@ -79,12 +112,20 @@ int main ()
 	std::cout << "qy_1: "<< qy_1<<std::endl;
 	std::cout << "qz_1: "<< qz_1<<std::endl;
 	
+	
+	std::cout << std::endl;
+	std::cout << std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
+	std::cout << "from quaternion to ZYX_Euler"<<std::endl;
+	std::cout << "////////////////////////////"<<std::endl;
+	
 	//psi = z, theta = y, phi = x
 	double psi,theta,phi;
 	QuaternionTozyxEuler(qw_1,qx_1,qy_1,qz_1,psi,theta,phi);
-	std::cout << "psi: "<< r2d(psi) <<std::endl;
-	std::cout << "theta: "<< r2d(theta) <<std::endl;
-	std::cout << "phi: "<< r2d(phi) <<std::endl;
+	std::cout << "x: "<< r2d(phi) <<std::endl;
+	std::cout << "y: "<< r2d(theta) <<std::endl;
+	std::cout << "z: "<< r2d(psi) <<std::endl;
+	
 	
 	//
 	
